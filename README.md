@@ -29,3 +29,8 @@ http://localhost:9090/graph?g0.expr=http_requests_total
 http://localhost:16686/search
 
 http://localhost:16686/search?service=base-server&tags=%7B%22http.route%22%3A%22%2F%2A%22%7D
+
+
+### Documentation
+
+https://docs.nestjs.com/openapi/types-and-parameters

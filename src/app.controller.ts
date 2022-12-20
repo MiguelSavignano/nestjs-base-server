@@ -1,5 +1,11 @@
 import { Controller, Get } from '@nestjs/common';
+import { ApiCreatedResponse, ApiProperty } from '@nestjs/swagger';
 import { AppService } from './app.service';
+
+export class HealthResponse {
+  @ApiProperty()
+  success: boolean;
+}
 
 @Controller()
 export class AppController {
@@ -8,5 +14,13 @@ export class AppController {
   @Get()
   getHello(): string {
     return this.appService.getHello();
+  }
+
+  @Get('/health')
+  @ApiCreatedResponse({
+    type: HealthResponse,
+  })
+  health(): HealthResponse {
+    return { success: true };
   }
 }
