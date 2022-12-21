@@ -29,6 +29,7 @@
     "@opentelemetry/exporter-jaeger": "^1.8.0",
     "@opentelemetry/exporter-zipkin": "^1.8.0",
     "@opentelemetry/sdk-trace-base": "^1.8.0",
+    "axios": "^1.2.1",
     "nestjs-opentelemetry-setup": "^1.0.0",
     "nestjs-prometheus-setup": "0.0.1",
     "reflect-metadata": "^0.1.13",
