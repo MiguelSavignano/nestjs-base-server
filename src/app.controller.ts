@@ -1,8 +1,8 @@
-import { Controller, Get, Logger } from '@nestjs/common';
+import { Controller, Get, Inject, Logger } from '@nestjs/common';
 import { ApiCreatedResponse, ApiProperty } from '@nestjs/swagger';
 import { AppService } from './app.service';
-import axios from 'axios';
 import { TraceService } from 'nestjs-opentelemetry-setup';
+import { AxiosStatic } from './http-client/axios';
 
 export class HealthResponse {
   @ApiProperty()
@@ -14,6 +14,7 @@ export class AppController {
   constructor(
     private readonly appService: AppService,
     private readonly traceService: TraceService,
+    @Inject('httpClient') private readonly axios: AxiosStatic,
   ) {}
 
   @Get()
@@ -22,12 +23,12 @@ export class AppController {
   }
 
   @Get('/my-endpoint')
-  async proxy() {
+  async myEndpoint() {
     Logger.log('log example');
     const span = this.traceService.startSpan('my_custom_span_name');
     // do something
     span.end();
-    const { data } = await axios.get(
+    const { data } = await this.axios.get(
       'https://jsonplaceholder.typicode.com/todos/1',
     );
     return data;

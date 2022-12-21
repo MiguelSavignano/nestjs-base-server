@@ -7,6 +7,7 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { OpenTelemetrySetupModule } from 'nestjs-opentelemetry-setup';
 import { ConfigModule } from '@nestjs/config';
 import configuration from './config/configuration';
+import { httpClientProvider } from './http-client/axios';
 
 @Module({
   imports: [
@@ -19,7 +20,7 @@ import configuration from './config/configuration';
     }),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, httpClientProvider],
 })
 export class AppModule {
   static configure(app: INestApplication) {
