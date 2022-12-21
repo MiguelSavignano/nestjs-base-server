@@ -9,7 +9,7 @@ import {
   OpenTelemetryModule,
 } from '@metinseylan/nestjs-opentelemetry';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import { ZipkinExporter } from '@opentelemetry/exporter-zipkin';
+import { JaegerExporter } from '@opentelemetry/exporter-jaeger';
 import { SimpleSpanProcessor } from '@opentelemetry/sdk-trace-base';
 
 @Module({
@@ -19,7 +19,7 @@ import { SimpleSpanProcessor } from '@opentelemetry/sdk-trace-base';
       serviceName: 'my-app',
       traceAutoInjectors: [ControllerInjector, LoggerInjector],
       // @ts-ignore
-      spanProcessor: new SimpleSpanProcessor(new ZipkinExporter()),
+      spanProcessor: new SimpleSpanProcessor(new JaegerExporter()),
     }),
   ],
   controllers: [AppController],

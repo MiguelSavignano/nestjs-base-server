@@ -1,6 +1,7 @@
 import { Controller, Get, Logger } from '@nestjs/common';
 import { ApiCreatedResponse, ApiProperty } from '@nestjs/swagger';
 import { AppService } from './app.service';
+import { context, trace } from '@opentelemetry/api';
 
 export class HealthResponse {
   @ApiProperty()
@@ -20,8 +21,9 @@ export class AppController {
   @ApiCreatedResponse({
     type: HealthResponse,
   })
-  health(): HealthResponse {
+  health() {
     Logger.log('health');
-    return { success: true };
+    const spanContext = trace.getSpan(context.active()).spanContext();
+    return { traceId: spanContext.traceId, success: true };
   }
 }
