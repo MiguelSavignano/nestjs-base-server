@@ -2,10 +2,11 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { OpenTelemetrySetupModule } from 'nestjs-opentelemetry-setup';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { httpClientProvider } from './http-client/axios';
+import { httpClientProviderMock, axiosMock } from './http-client/axios';
 
 describe('AppController', () => {
   let appController: AppController;
+  const expectedTodo = { id: 1 };
 
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
@@ -15,15 +16,24 @@ describe('AppController', () => {
         }),
       ],
       controllers: [AppController],
-      providers: [AppService, httpClientProvider],
+      providers: [AppService, httpClientProviderMock],
     }).compile();
 
     appController = app.get<AppController>(AppController);
+    axiosMock
+      .onGet('https://jsonplaceholder.typicode.com/todos/1')
+      .reply(200, expectedTodo);
   });
 
-  describe('root', () => {
-    it('should return "Hello World!"', () => {
-      expect(appController.getHello()).toBe('Hello World!');
+  // describe('root', () => {
+  //   it('should return "Hello World!"', () => {
+  //     expect(appController.getHello()).toBe('Hello World!');
+  //   });
+  // });
+
+  describe('myEndpoint', () => {
+    it('return todo 1', async () => {
+      expect(await appController.myEndpoint()).toEqual(expectedTodo);
     });
   });
 });
