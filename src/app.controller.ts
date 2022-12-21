@@ -1,8 +1,8 @@
 import { Controller, Get, Logger } from '@nestjs/common';
 import { ApiCreatedResponse, ApiProperty } from '@nestjs/swagger';
 import { AppService } from './app.service';
-import { context, trace } from '@opentelemetry/api';
 import axios from 'axios';
+import { TraceService } from 'nestjs-opentelemetry-setup';
 
 export class HealthResponse {
   @ApiProperty()
@@ -11,15 +11,22 @@ export class HealthResponse {
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(
+    private readonly appService: AppService,
+    private readonly traceService: TraceService,
+  ) {}
 
   @Get()
   getHello(): string {
     return this.appService.getHello();
   }
 
-  @Get('proxy')
+  @Get('/my-endpoint')
   async proxy() {
+    Logger.log('log example');
+    const span = this.traceService.startSpan('my_custom_span_name');
+    // do something
+    span.end();
     const { data } = await axios.get(
       'https://jsonplaceholder.typicode.com/todos/1',
     );
@@ -31,7 +38,6 @@ export class AppController {
     type: HealthResponse,
   })
   health() {
-    const spanContext = trace.getSpan(context.active()).spanContext();
-    return { traceId: spanContext.traceId, success: true };
+    return { success: true };
   }
 }

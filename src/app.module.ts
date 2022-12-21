@@ -3,23 +3,14 @@ import { INestApplication, Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PrometheusModule } from 'nestjs-prometheus-setup';
-import {
-  ControllerInjector,
-  LoggerInjector,
-  OpenTelemetryModule,
-} from '@metinseylan/nestjs-opentelemetry';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import { JaegerExporter } from '@opentelemetry/exporter-jaeger';
-import { SimpleSpanProcessor } from '@opentelemetry/sdk-trace-base';
+import { OpenTelemetrySetupModule } from 'nestjs-opentelemetry-setup';
 
 @Module({
   imports: [
     PrometheusModule.fromRoot(),
-    OpenTelemetryModule.forRoot({
+    OpenTelemetrySetupModule.forRoot({
       serviceName: 'my-app',
-      traceAutoInjectors: [ControllerInjector, LoggerInjector],
-      // @ts-ignore
-      spanProcessor: new SimpleSpanProcessor(new JaegerExporter()),
     }),
   ],
   controllers: [AppController],

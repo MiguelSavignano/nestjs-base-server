@@ -21,16 +21,12 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
-    "@metinseylan/nestjs-opentelemetry": "^3.0.0",
     "@nestjs/common": "^9.0.0",
     "@nestjs/core": "^9.0.0",
     "@nestjs/platform-express": "^9.0.0",
     "@nestjs/swagger": "^6.1.4",
-    "@opentelemetry/exporter-jaeger": "^1.8.0",
-    "@opentelemetry/exporter-zipkin": "^1.8.0",
-    "@opentelemetry/sdk-trace-base": "^1.8.0",
     "axios": "^1.2.1",
-    "nestjs-opentelemetry-setup": "^1.0.0",
+    "nestjs-opentelemetry-setup": "^2.0.0",
     "nestjs-prometheus-setup": "0.0.1",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
