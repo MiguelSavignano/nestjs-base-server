@@ -3,6 +3,7 @@ import { ApiCreatedResponse, ApiProperty } from '@nestjs/swagger';
 import { AppService } from './app.service';
 import axios from 'axios';
 import { TraceService } from 'nestjs-opentelemetry-setup';
+import { context, trace } from '@opentelemetry/api';
 
 export class HealthResponse {
   @ApiProperty()
@@ -21,8 +22,14 @@ export class AppController {
     return this.appService.getHello();
   }
 
-  @Get('/my-endpoint')
+  @Get('/proxy')
   async proxy() {
+    const { data } = await axios.get('http://localhost:4000/my-endpoint');
+    return { data };
+  }
+
+  @Get('/my-endpoint')
+  async myMethod() {
     Logger.log('log example');
     const span = this.traceService.startSpan('my_custom_span_name');
     // do something
