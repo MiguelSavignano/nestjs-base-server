@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Logger } from '@nestjs/common';
 import { ApiCreatedResponse, ApiProperty } from '@nestjs/swagger';
 import { AppService } from './app.service';
 
@@ -21,6 +21,7 @@ export class AppController {
     type: HealthResponse,
   })
   health(): HealthResponse {
+    Logger.log('health');
     return { success: true };
   }
 }

@@ -18,6 +18,11 @@ services:
     restart: always
     network_mode: host
 
+  zipkin:
+    image: openzipkin/zipkin
+    ports:
+      - 9411:9411
+
   jaeger:
     image: jaegertracing/all-in-one:1.40
     environment:

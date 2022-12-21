@@ -1,15 +1,25 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { INestApplication, Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PrometheusModule } from 'nestjs-prometheus-setup';
-import { OpenTelemetryModule } from 'nestjs-opentelemetry-setup';
+import {
+  ControllerInjector,
+  LoggerInjector,
+  OpenTelemetryModule,
+} from '@metinseylan/nestjs-opentelemetry';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { ZipkinExporter } from '@opentelemetry/exporter-zipkin';
+import { SimpleSpanProcessor } from '@opentelemetry/sdk-trace-base';
 
 @Module({
   imports: [
     PrometheusModule.fromRoot(),
-    OpenTelemetryModule.fromRoot({
-      serviceName: 'base-server',
+    OpenTelemetryModule.forRoot({
+      serviceName: 'my-app',
+      traceAutoInjectors: [ControllerInjector, LoggerInjector],
+      // @ts-ignore
+      spanProcessor: new SimpleSpanProcessor(new ZipkinExporter()),
     }),
   ],
   controllers: [AppController],
