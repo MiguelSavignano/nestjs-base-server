@@ -5,12 +5,17 @@ import { AppService } from './app.service';
 import { PrometheusModule } from 'nestjs-prometheus-setup';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { OpenTelemetrySetupModule } from 'nestjs-opentelemetry-setup';
+import { ConfigModule } from '@nestjs/config';
+import configuration from './config/configuration';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      load: [configuration],
+    }),
     PrometheusModule.fromRoot(),
     OpenTelemetrySetupModule.forRoot({
-      serviceName: 'my-app',
+      serviceName: configuration().opentelemetry.serviceName,
     }),
   ],
   controllers: [AppController],
