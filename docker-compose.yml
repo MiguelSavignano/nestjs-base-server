@@ -2,6 +2,8 @@
 version: '3.7'
 volumes:
   prometheus_data: {}
+  # grafana_data: {}
+
 services:
   prometheus:
     image: prom/prometheus:v2.36.2
@@ -18,10 +20,21 @@ services:
     restart: always
     network_mode: host
 
-  zipkin:
-    image: openzipkin/zipkin
+  grafana:
+    image: grafana/grafana
+    user: "472"
+    # depends_on:
+    #   - prometheus
     ports:
-      - 9411:9411
+      - 9000:9000
+    volumes:
+      # - grafana_data:/var/lib/grafana
+      - ./services/grafana/provisioning/:/etc/grafana/provisioning/
+      - ./services/grafana/grafana.ini:/etc/grafana/grafana.ini
+    env_file:
+      - ./services/grafana/config.monitoring
+    restart: always
+    network_mode: host
 
   jaeger:
     image: jaegertracing/all-in-one:1.40
@@ -40,3 +53,5 @@ services:
       - "14269:14269"
       - "9411:9411"
     # network_mode: host
+# volumes:
+#     prometheus_data: {}
