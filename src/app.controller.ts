@@ -21,6 +21,12 @@ export class AppController {
     return this.appService.getHello();
   }
 
+  @Get('/error')
+  error(): any {
+    throw new Error('Error');
+    return {};
+  }
+
   @Get('/my-endpoint')
   async proxy() {
     Logger.log('log example');
