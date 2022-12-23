@@ -46,3 +46,8 @@ https://grafana.com/grafana/dashboards/14565-node-js-dashboard/
 ### Documentation
 
 https://docs.nestjs.com/openapi/types-and-parameters
+
+
+### TODO
+
+- Correlate prometheus and traces
