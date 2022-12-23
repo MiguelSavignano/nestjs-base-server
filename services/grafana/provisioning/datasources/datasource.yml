@@ -9,6 +9,15 @@ deleteDatasources:
 # list of datasources to insert/update depending
 # whats available in the database
 datasources:
+- name: tempo
+  type: tempo
+  uid: tempo
+  access: proxy
+  url: http://tempo-query:16686
+  isDefault: false
+  version: 1
+  editable: false
+  basicAuth: false
   # <string, required> name of the datasource. Required
 - name: Prometheus
   # <string, required> datasource type. Required
