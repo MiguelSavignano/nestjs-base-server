@@ -33,7 +33,21 @@ http://localhost:16686/search?service=base-server&tags=%7B%22http.route%22%3A%22
 
 http://localhost:9411
 
+### Grafana
+
+http://localhost:9000
+
+Login: `admin:foobar`
+
+Example importing dashboard from
+https://grafana.com/grafana/dashboards/14565-node-js-dashboard/
+
 
 ### Documentation
 
 https://docs.nestjs.com/openapi/types-and-parameters
+
+
+### TODO
+
+- Correlate prometheus and traces
