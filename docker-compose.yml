@@ -2,7 +2,7 @@
 version: '3.7'
 volumes:
   prometheus_data: {}
-  # grafana_data: {}
+  grafana_data: {}
 
 services:
   prometheus:
@@ -26,8 +26,13 @@ services:
     volumes:
       - ./services/tempo/tempo-local.yaml:/etc/tempo-local.yaml
     ports:
-    - "6832:6832/udp"
+    - "6832:6832/udp" # jaeger
     - 3200:3200
+    - 14268:14268  # jaeger ingest
+    - "4317:4317"  # otlp grpc
+    - "4318:4318"  # otlp http
+    - "9411:9411"   # zipkin
+    network_mode: host
 
   tempo-query:
     image: grafana/tempo-query:latest
@@ -38,6 +43,7 @@ services:
     - "16686:16686"  # jaeger-ui
     depends_on:
     - tempo
+    network_mode: host
   grafana:
     image: grafana/grafana
     user: "472"
@@ -46,7 +52,7 @@ services:
     ports:
       - 9000:9000
     volumes:
-      # - grafana_data:/var/lib/grafana
+      - grafana_data:/var/lib/grafana
       - ./services/grafana/provisioning/:/etc/grafana/provisioning/
       - ./services/grafana/grafana.ini:/etc/grafana/grafana.ini
     env_file:
@@ -71,5 +77,3 @@ services:
   #     - "14269:14269"
   #     - "9411:9411"
     # network_mode: host
-# volumes:
-#     prometheus_data: {}

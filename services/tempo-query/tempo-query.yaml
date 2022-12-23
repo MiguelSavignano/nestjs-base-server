@@ -1,1 +1,1 @@
-backend: "tempo:3200"
+backend: "localhost:3200"
