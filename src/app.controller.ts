@@ -3,6 +3,7 @@ import { ApiCreatedResponse, ApiProperty } from '@nestjs/swagger';
 import { AppService } from './app.service';
 import axios from 'axios';
 import { TraceService } from 'nestjs-opentelemetry-setup';
+import { JwtDecode } from 'nestjs-jwt-utils';
 
 export class HealthResponse {
   @ApiProperty()
@@ -15,6 +16,11 @@ export class AppController {
     private readonly appService: AppService,
     private readonly traceService: TraceService,
   ) {}
+
+  @Get('/profile')
+  profile(@JwtDecode() jwtData): any {
+    return jwtData;
+  }
 
   @Get()
   getHello(): string {
