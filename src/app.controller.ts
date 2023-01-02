@@ -5,6 +5,7 @@ import axios from 'axios';
 import { TraceService } from 'nestjs-opentelemetry-setup';
 import { JwtDecode } from 'nestjs-jwt-utils';
 
+class MyCustomError extends Error {}
 export class HealthResponse {
   @ApiProperty()
   success: boolean;
@@ -29,7 +30,7 @@ export class AppController {
 
   @Get('/error')
   error(): any {
-    throw new Error('Error');
+    throw new MyCustomError('error message');
     return {};
   }
 

@@ -28,7 +28,7 @@
     "@nestjs/swagger": "^6.1.4",
     "axios": "^1.2.1",
     "nestjs-jwt-utils": "^0.1.0",
-    "nestjs-opentelemetry-setup": "^2.0.2",
+    "nestjs-opentelemetry-setup": "^2.1.0",
     "nestjs-prometheus-setup": "0.0.1",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
