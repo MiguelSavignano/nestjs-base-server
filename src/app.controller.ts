@@ -1,9 +1,10 @@
-import { Controller, Get, Logger } from '@nestjs/common';
+import { Controller, Get, Logger, UseInterceptors } from '@nestjs/common';
 import { ApiCreatedResponse, ApiProperty } from '@nestjs/swagger';
 import { AppService } from './app.service';
 import axios from 'axios';
 import { TraceService } from 'nestjs-opentelemetry-setup';
 import { JwtDecode } from 'nestjs-jwt-utils';
+import { LoggingInterceptor } from './external.module';
 
 class MyCustomError extends Error {}
 export class HealthResponse {

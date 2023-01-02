@@ -7,6 +7,7 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { OpenTelemetrySetupModule } from 'nestjs-opentelemetry-setup';
 import { ConfigModule } from '@nestjs/config';
 import configuration from './config/configuration';
+import { ExternalModule } from './external.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import configuration from './config/configuration';
     OpenTelemetrySetupModule.forRoot({
       serviceName: configuration().opentelemetry.serviceName,
     }),
+    ExternalModule.forRoot(),
   ],
   controllers: [AppController],
   providers: [AppService],
