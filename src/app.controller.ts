@@ -28,6 +28,11 @@ export class AppController {
     return this.appService.getHello();
   }
 
+  @Get('/context')
+  getContext(): any {
+    return this.appService.getContext();
+  }
+
   @Get('/error')
   error(): any {
     throw new MyCustomError('error message');
