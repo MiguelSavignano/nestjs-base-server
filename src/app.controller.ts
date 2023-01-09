@@ -1,15 +1,11 @@
 import { Controller, Get, Logger } from '@nestjs/common';
-import { ApiCreatedResponse, ApiProperty } from '@nestjs/swagger';
 import { AppService } from './app.service';
 import axios from 'axios';
 import { TraceService } from 'nestjs-opentelemetry-setup';
 import { JwtDecode } from 'nestjs-jwt-utils';
+import { HealthResponse } from './dto/health-response.dto';
 
 class MyCustomError extends Error {}
-export class HealthResponse {
-  @ApiProperty()
-  success: boolean;
-}
 
 @Controller()
 export class AppController {
@@ -47,10 +43,7 @@ export class AppController {
   }
 
   @Get('/health')
-  @ApiCreatedResponse({
-    type: HealthResponse,
-  })
-  health() {
+  health(): HealthResponse {
     return { success: true };
   }
 }

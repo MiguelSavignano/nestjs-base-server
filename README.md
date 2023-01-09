@@ -43,9 +43,15 @@ Example importing dashboard from
 https://grafana.com/grafana/dashboards/14565-node-js-dashboard/
 
 
-### Documentation
+### OpenAPI Specification
+All files defined with .controller and .dto will be exposed in swagger
 
+http://localhost:3000/api
+
+More info:
 https://docs.nestjs.com/openapi/types-and-parameters
+https://docs.nestjs.com/openapi/cli-plugin#using-the-cli-plugin
+
 
 
 ### TODO
