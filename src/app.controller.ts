@@ -25,12 +25,8 @@ export class AppController {
 
   @MessagePattern('hero.kill.dragon')
   killDragon(@Payload() message: any, @Ctx() context: KafkaContext): any {
-    const dragonId = message.dragonId;
-    const items = [
-      { id: 1, name: 'Mythical Sword' },
-      { id: 2, name: 'Key to Dungeon' },
-    ];
-    return items;
+    console.log('Kafka on message', message, context);
+    return true;
   }
 
   @Get('/emit')
