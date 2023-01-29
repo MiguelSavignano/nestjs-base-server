@@ -1,8 +1,4 @@
-import { Controller, Get, Inject, Logger } from '@nestjs/common';
-import { AppService } from './app.service';
-import axios from 'axios';
-import { TraceService } from 'nestjs-opentelemetry-setup';
-import { JwtDecode } from 'nestjs-jwt-utils';
+import { Controller, Get, Inject } from '@nestjs/common';
 import { HealthResponse } from './dto/health-response.dto';
 import {
   ClientKafka,
@@ -12,26 +8,30 @@ import {
   Payload,
 } from '@nestjs/microservices';
 
+const KAFKA_TOPICS = {
+  PING_EVENT: 'ping',
+};
+
 @Controller()
 export class AppController {
-  constructor(
-    @Inject('HERO_SERVICE') private client: ClientKafka,
-    private readonly appService: AppService,
-  ) {}
+  constructor(@Inject('MAIN_KAFKA_CLIENT') private clientKafka: ClientKafka) {}
 
   onModuleInit() {
-    this.client.subscribeToResponseOf('hero.kill.dragon');
+    this.clientKafka.subscribeToResponseOf(KAFKA_TOPICS.PING_EVENT);
   }
 
-  @MessagePattern('hero.kill.dragon')
+  @MessagePattern(KAFKA_TOPICS.PING_EVENT)
   killDragon(@Payload() message: any, @Ctx() context: KafkaContext): any {
-    console.log('Kafka on message', message, context);
-    return true;
+    console.log('pong');
+    console.log('Kafka on message', message);
   }
 
   @Get('/emit')
   emitKafka() {
-    this.client.emit('hero.kill.dragon', JSON.stringify({ name: 'Jhon' }));
+    this.clientKafka.emit(
+      KAFKA_TOPICS.PING_EVENT,
+      JSON.stringify({ data: 'Hello world!' }),
+    );
     return { success: true };
   }
 

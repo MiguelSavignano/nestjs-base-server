@@ -16,15 +16,15 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
     PrometheusModule.fromRoot(),
     ClientsModule.register([
       {
-        name: 'HERO_SERVICE',
+        name: 'MAIN_KAFKA_CLIENT',
         transport: Transport.KAFKA,
         options: {
           client: {
-            clientId: 'hero',
+            clientId: 'my-client-id',
             brokers: ['localhost:9092'],
           },
           consumer: {
-            groupId: 'hero-consumer',
+            groupId: 'my-consumer',
           },
         },
       },
