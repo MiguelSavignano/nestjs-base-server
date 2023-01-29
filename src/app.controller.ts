@@ -1,45 +1,42 @@
-import { Controller, Get, Logger } from '@nestjs/common';
+import { Controller, Get, Inject, Logger } from '@nestjs/common';
 import { AppService } from './app.service';
 import axios from 'axios';
 import { TraceService } from 'nestjs-opentelemetry-setup';
 import { JwtDecode } from 'nestjs-jwt-utils';
 import { HealthResponse } from './dto/health-response.dto';
-
-class MyCustomError extends Error {}
+import {
+  ClientKafka,
+  Ctx,
+  KafkaContext,
+  MessagePattern,
+  Payload,
+} from '@nestjs/microservices';
 
 @Controller()
 export class AppController {
   constructor(
+    @Inject('HERO_SERVICE') private client: ClientKafka,
     private readonly appService: AppService,
-    private readonly traceService: TraceService,
   ) {}
 
-  @Get('/profile')
-  profile(@JwtDecode() jwtData): any {
-    return jwtData;
+  onModuleInit() {
+    this.client.subscribeToResponseOf('hero.kill.dragon');
   }
 
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  @MessagePattern('hero.kill.dragon')
+  killDragon(@Payload() message: any, @Ctx() context: KafkaContext): any {
+    const dragonId = message.dragonId;
+    const items = [
+      { id: 1, name: 'Mythical Sword' },
+      { id: 2, name: 'Key to Dungeon' },
+    ];
+    return items;
   }
 
-  @Get('/error')
-  error(): any {
-    throw new MyCustomError('error message');
-    return {};
-  }
-
-  @Get('/my-endpoint')
-  async proxy() {
-    Logger.log('log example');
-    const span = this.traceService.startSpan('my_custom_span_name');
-    // do something
-    span.end();
-    const { data } = await axios.get(
-      'https://jsonplaceholder.typicode.com/todos/1',
-    );
-    return data;
+  @Get('/emit')
+  emitKafka() {
+    this.client.emit('hero.kill.dragon', JSON.stringify({ name: 'Jhon' }));
+    return { success: true };
   }
 
   @Get('/health')
