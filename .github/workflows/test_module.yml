@@ -21,11 +21,14 @@ jobs:
       - name: Build
         run: npm ci
 
-      - run: cat $GITHUB_EVENT_PATH
-      - run: echo $GITHUB_REF
-      - run: echo $GITHUB_PATH
-      - run: echo $GITHUB_HEAD_REF
-      - run: echo $GITHUB_ACTION_PATH
+      # - run: cat $GITHUB_EVENT_PATH
+      # - run: echo $GITHUB_REF
+      # - run: echo $GITHUB_PATH
+      # - run: echo $GITHUB_HEAD_REF
+      # - run: echo $GITHUB_ACTION_PATH
+
+      - name: Detect path
+        run: git diff-tree -r --name-only $GITHUB_REF $GITHUB_BASE_REF
 
       - name: Test
         run: npm test -- src/app.controller.spec.ts
