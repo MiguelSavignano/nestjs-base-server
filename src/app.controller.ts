@@ -5,6 +5,7 @@ import { TraceService } from 'nestjs-opentelemetry-setup';
 import { JwtDecode } from 'nestjs-jwt-utils';
 import { HealthResponse } from './dto/health-response.dto';
 
+// change
 class MyCustomError extends Error {}
 
 @Controller()
