@@ -8,8 +8,4 @@ on:
     #   - 'src/**.ts'
 jobs:
   test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@main
-      - run: cat ./.github/workflows/base-test.yml
-      - uses: ./.github/workflows/base-test.yml
+    uses: ./.github/workflows/base-test.yml
