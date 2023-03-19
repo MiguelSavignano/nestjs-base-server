@@ -5,7 +5,7 @@ on:
     branches:
       - '*'
     paths:
-      - 'src/app.controller.ts'
+      - 'src/**.ts'
 jobs:
   test:
     runs-on: ubuntu-latest
