@@ -10,4 +10,4 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: ./.github/actions/base-test
+      - uses: ./.github/workflows/base-test.yml
