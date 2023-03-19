@@ -8,3 +8,5 @@ async function bootstrap() {
   await app.listen(configuration().port);
 }
 bootstrap();
+
+// trigger
