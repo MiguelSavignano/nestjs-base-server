@@ -1,0 +1,37 @@
+# Require NPM_TOKEN in GitHub
+# <REPO_URL>/settings/secrets/actions
+
+name: Example
+
+on:
+  push:
+    branches:
+      - '*'
+    tags:
+      - v*
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        version: [16]
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Set up Nodejs  ${{ matrix.version }}
+        uses: actions/setup-node@master
+        with:
+          node-version: ${{ matrix.version }}
+      - name: Build
+        run: npm ci
+
+      - name: Test
+        run: npm test
+
+      # - uses: IgnusG/jest-report-action@v2.3.3
+      #   if: always()
+      #   with:
+      #     access-token: ${{ secrets.GITHUB_TOKEN }}
+      #     check-name: Jest test with node-version ${{ matrix.version }}
