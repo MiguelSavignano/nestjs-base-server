@@ -21,6 +21,12 @@ jobs:
       - name: Build
         run: npm ci
 
+      - run: cat $GITHUB_EVENT_PATH
+      - run: echo $GITHUB_REF
+      - run: echo $GITHUB_PATH
+      - run: echo $GITHUB_HEAD_REF
+      - run: echo $GITHUB_ACTION_PATH
+
       - name: Test
         run: npm test -- src/app.controller.spec.ts
 
