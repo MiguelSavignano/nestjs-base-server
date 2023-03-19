@@ -1,6 +1,3 @@
-# Require NPM_TOKEN in GitHub
-# <REPO_URL>/settings/secrets/actions
-
 name: Example
 
 on:
