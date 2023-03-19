@@ -1,0 +1,32 @@
+# inputs:
+#   who-to-greet:  # id of input
+#     description: 'Who to greet'
+#     required: true
+#     default: 'World'
+# outputs:
+#   random-number:
+#     description: "Random number"
+#     value: ${{ steps.random-number-generator.outputs.random-number }}
+name: 'Hello World'
+description: 'Greet someone'
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/checkout@v1
+
+    - name: Set up Nodejs
+      uses: actions/setup-node@master
+      with:
+        node-version: 16
+
+    - name: Build
+      run: npm ci
+
+    - name: Test
+      run: npm test
+
+    # - uses: IgnusG/jest-report-action@v2.3.3
+    #   if: always()
+    #   with:
+    #     access-token: ${{ secrets.GITHUB_TOKEN }}
+    #     check-name: Jest test with node-version ${{ matrix.version }}
