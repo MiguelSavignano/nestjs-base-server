@@ -9,5 +9,3 @@ on:
 jobs:
   test:
     uses: ./.github/workflows/base-test.yml
-    steps:
-      - run: Echo '1'
