@@ -9,3 +9,5 @@ on:
 jobs:
   test:
     uses: ./.github/workflows/base-test.yml
+    with:
+      node-version: 16
