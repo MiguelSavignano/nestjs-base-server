@@ -1,4 +1,4 @@
-name: Example test suite
+name: Example
 
 on:
   push:
@@ -8,6 +8,6 @@ on:
     #   - 'src/**.ts'
 jobs:
   test:
-    uses: devmasx/actions/.github/workflows/nodejs-build-test.yml@main
+    uses: ./.github/workflows/base-test.yml
     with:
       node-version: 16
