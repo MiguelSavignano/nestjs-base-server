@@ -22,10 +22,10 @@ jobs:
           node-version: ${{ inputs.node-version }}
           cache: 'npm'
 
-      - name: Build
+      - name: Install dependencies
         run: npm ci
 
-      - name: Test
+      - name: Run Test
         run: npm test
 
       # - uses: IgnusG/jest-report-action@v2.3.3
