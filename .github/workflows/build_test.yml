@@ -8,6 +8,6 @@ on:
     #   - 'src/**.ts'
 jobs:
   test:
-    uses: devmasx/actions-reusing-workflows/nodejs/build-test.yml@main
+    uses: devmasx/actions/.github/workflows/nodejs/build-test.yml@main
     with:
       node-version: 16
