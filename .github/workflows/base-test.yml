@@ -2,6 +2,13 @@ name: Base tet
 
 on:
   workflow_call:
+    inputs:
+      node-version:
+        required: true
+        type: string
+      jest-report:
+        required: false
+        type: string
 
 jobs:
   build_test:
@@ -12,7 +19,8 @@ jobs:
       - name: Set up Nodejs
         uses: actions/setup-node@master
         with:
-          node-version: 16
+          node-version: ${{ inputs.node-version }}
+          cache: 'npm'
 
       - name: Build
         run: npm ci
