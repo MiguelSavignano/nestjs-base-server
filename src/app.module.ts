@@ -10,6 +10,8 @@ import { AppService } from './app.service';
 import configuration from './config/configuration';
 import { HealthController } from './health.controller';
 import { requestsLogger } from './libs/request-logger';
+import { getNodeAutoInstrumentations } from '@opentelemetry/auto-instrumentations-node';
+import { HttpInstrumentation } from 'opentelemetry-extended-instrumentation-http';
 
 @Module({
   imports: [
@@ -20,6 +22,9 @@ import { requestsLogger } from './libs/request-logger';
     PrometheusModule.fromRoot(),
     OpenTelemetrySetupModule.forRoot({
       serviceName: configuration().opentelemetry.serviceName,
+      instrumentations: getNodeAutoInstrumentations(
+        HttpInstrumentation.withPayloadDetails(),
+      ),
     }),
   ],
   controllers: [AppController, HealthController],

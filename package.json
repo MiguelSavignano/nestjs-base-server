@@ -34,6 +34,7 @@
     "nestjs-jwt-utils": "^0.1.0",
     "nestjs-opentelemetry-setup": "^2.1.0",
     "nestjs-prometheus-setup": "0.0.1",
+    "opentelemetry-extended-instrumentation-http": "^0.1.1",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0"

@@ -38,6 +38,10 @@ export class AppController {
     const { data } = await axios.get(
       'https://jsonplaceholder.typicode.com/todos/1',
     );
+    await axios.post('https://jsonplaceholder.typicode.com/posts', {
+      data: 1,
+    });
+
     return data;
   }
 }
