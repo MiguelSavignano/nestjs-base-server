@@ -29,6 +29,8 @@
     "@nestjs/swagger": "^6.1.4",
     "@nestjs/terminus": "^9.2.1",
     "axios": "^1.2.1",
+    "express-request-logger": "0.0.3",
+    "express-requests-logger": "^4.0.0",
     "nestjs-jwt-utils": "^0.1.0",
     "nestjs-opentelemetry-setup": "^2.1.0",
     "nestjs-prometheus-setup": "0.0.1",

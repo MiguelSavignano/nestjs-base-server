@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { INestApplication, Module } from '@nestjs/common';
+import { INestApplication, MiddlewareConsumer, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TerminusModule } from '@nestjs/terminus';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
@@ -9,6 +9,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import configuration from './config/configuration';
 import { HealthController } from './health.controller';
+import { requestsLogger } from './libs/request-logger';
 
 @Module({
   imports: [
@@ -25,6 +26,10 @@ import { HealthController } from './health.controller';
   providers: [AppService],
 })
 export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(requestsLogger).forRoutes('*');
+  }
+
   static configure(app: INestApplication) {
     const config = new DocumentBuilder()
       .setTitle('API')
