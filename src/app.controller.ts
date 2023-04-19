@@ -3,7 +3,6 @@ import { AppService } from './app.service';
 import axios from 'axios';
 import { TraceService } from 'nestjs-opentelemetry-setup';
 import { JwtDecode } from 'nestjs-jwt-utils';
-import { HealthResponse } from './dto/health-response.dto';
 
 class MyCustomError extends Error {}
 
@@ -39,11 +38,10 @@ export class AppController {
     const { data } = await axios.get(
       'https://jsonplaceholder.typicode.com/todos/1',
     );
-    return data;
-  }
+    await axios.post('https://jsonplaceholder.typicode.com/posts', {
+      data: 1,
+    });
 
-  @Get('/health')
-  health(): HealthResponse {
-    return { success: true };
+    return data;
   }
 }
