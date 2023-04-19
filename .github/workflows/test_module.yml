@@ -1,28 +1,19 @@
 name: Example
 
 on:
-  push:
-    branches:
-      - '*'
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'
+        required: true
+        default: 'warning'
+      tags:
+        description: 'Test scenario tags'
+
 jobs:
-  test:
+  printInputs:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v1
-
-      - name: Set up Nodejs
-        uses: actions/setup-node@master
-        with:
-          node-version: 16
-      - name: Build
-        run: npm ci
-
-      - name: Test
-        run: npm test
-
-      # - uses: IgnusG/jest-report-action@v2.3.3
-      #   if: always()
-      #   with:
-      #     access-token: ${{ secrets.GITHUB_TOKEN }}
-      #     check-name: Jest test with node-version ${{ matrix.version }}
+    - run: |
+        echo "Log level: ${{ github.event.inputs.logLevel }}"
+        echo "Tags: ${{ github.event.inputs.tags }}"
